@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('attendances', function (Blueprint $table) {
-            $table->time('duration')->nullable();
+            // Cek apakah kolom 'duration' sudah ada sebelum menambahkannya
+            if (!Schema::hasColumn('attendances', 'duration')) {
+                $table->time('duration')->nullable();
+            }
         });
     }
 
@@ -22,7 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('attendances', function (Blueprint $table) {
-            $table->dropColumn('duration');
+            // Cek apakah kolom ada sebelum mencoba menghapusnya
+            if (Schema::hasColumn('attendances', 'duration')) {
+                $table->dropColumn('duration');
+            }
         });
     }
 };

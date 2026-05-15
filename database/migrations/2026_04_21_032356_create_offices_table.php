@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('offices', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->double('latitude');
-            $table->double('longitude');
-            $table->integer('radius');
-            $table->timestamps();
-        });
+        // Mengecek apakah tabel 'offices' BELUM ada di database
+        if (!Schema::hasTable('offices')) {
+            Schema::create('offices', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->double('latitude');
+                $table->double('longitude');
+                $table->integer('radius');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

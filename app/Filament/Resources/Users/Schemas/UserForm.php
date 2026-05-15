@@ -17,20 +17,17 @@ class UserForm
     {
         return $schema
             ->components([
-                Group::make()
-                ->components([
-                    Section::make()
-                    ->components([
+                Group::make()->components([
+                    Section::make()->components([
                         TextInput::make('name')
                             ->required(),
                         TextInput::make('email')
                             ->label('Email address')
                             ->email()
                             ->required(),
-                        Select::make('roles')
-                            ->relationship('roles', 'name')
-                            ->preload()
-                            ->searchable(),
+                        Select::make('roles.name')
+                            ->label('Role')
+                            ->relationship('roles', 'name'),
                         FileUpload::make('avatar')
                             ->image()
                             ->disk('public')
@@ -38,19 +35,17 @@ class UserForm
                             ->preserveFilenames(),
                     ])
                 ]),
-                Group::make()
-                ->components([
-                    Section::make()
-                    ->components([
+                Group::make()->components([
+                    Section::make()->components([
                         DateTimePicker::make('email_verified_at'),
                         TextInput::make('password')
-                            ->password()
                             ->required()
+                            ->password()
                             ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                             ->dehydrated(fn ($state) => filled($state))
-                            ->required(fn (string $context): bool => $context === 'create'),
+                            ->required(fn (string $context): bool => $context === 'çreate' ),
                     ])
-                ])
+                ]),
             ]);
     }
 }

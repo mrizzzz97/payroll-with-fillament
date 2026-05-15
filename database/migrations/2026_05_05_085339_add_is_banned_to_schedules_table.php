@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->boolean('is_banned')->default(false);
+            // Cek apakah kolom 'is_banned' sudah ada sebelum menambahkannya
+            if (!Schema::hasColumn('schedules', 'is_banned')) {
+                $table->boolean('is_banned')->default(false);
+            }
         });
     }
 
@@ -22,7 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->dropColumn('is_banned');
+            // Cek apakah kolom ada sebelum menghapusnya
+            if (Schema::hasColumn('schedules', 'is_banned')) {
+                $table->dropColumn('is_banned');
+            }
         });
     }
 };

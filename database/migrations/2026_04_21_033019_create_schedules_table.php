@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schedules', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('shift_id')->references('id')->on('shifts')->onDelete('cascade');
-            $table->foreignId('office_id')->references('id')->on('offices')->onDelete('cascade');
-            $table->timestamps();
-        });
+        // Cek dulu apakah tabel 'schedules' sudah ada
+        if (!Schema::hasTable('schedules')) {
+            Schema::create('schedules', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+                $table->foreignId('shift_id')->references('id')->on('shifts')->onDelete('cascade');
+                $table->foreignId('office_id')->references('id')->on('offices')->onDelete('cascade');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

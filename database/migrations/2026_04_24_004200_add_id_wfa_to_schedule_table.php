@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->boolean('is_wfa')->default(false);
+            // Cek dulu apakah kolom 'is_wfa' BELUM ada sebelum menambahkannya
+            if (!Schema::hasColumn('schedules', 'is_wfa')) {
+                $table->boolean('is_wfa')->default(false);
+            }
         });
     }
 
@@ -22,7 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->dropColumn('is_wfa');
+            // Cek dulu apakah kolomnya ADA sebelum mencoba menghapusnya
+            if (Schema::hasColumn('schedules', 'is_wfa')) {
+                $table->dropColumn('is_wfa');
+            }
         });
     }
 };

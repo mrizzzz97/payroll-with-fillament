@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shifts', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->timestamps();
-        });
+        // Tambahkan pengecekan ini agar tidak error jika tabel sudah ada
+        if (!Schema::hasTable('shifts')) {
+            Schema::create('shifts', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->time('start_time');
+                $table->time('end_time');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

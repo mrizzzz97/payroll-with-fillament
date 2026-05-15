@@ -11,19 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attendances', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->double('schedule_latitude');
-            $table->double('schedule_longitude');
-            $table->time('schedule_start_time');
-            $table->time('schedule_end_time');
-            $table->double('latitude');
-            $table->double('longitude');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->timestamps();
-        });
+        // Cek dulu apakah tabel 'attendances' sudah ada
+        if (!Schema::hasTable('attendances')) {
+            Schema::create('attendances', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+                $table->double('schedule_latitude');
+                $table->double('schedule_longitude');
+                $table->time('schedule_start_time');
+                $table->time('schedule_end_time');
+                $table->double('latitude');
+                $table->double('longitude');
+                $table->time('start_time');
+                $table->time('end_time');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
